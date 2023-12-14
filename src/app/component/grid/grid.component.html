@@ -1,0 +1,26 @@
+<div class="d-flex flex-column h-100" cdkDropListGroup>
+  <ng-container *ngFor="let row of contentsMatrix; index as rowIndex">
+    <div appTileContainer #ctnr="appTileContainer" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="row" (cdkDropListDropped)="drop($event)" class="flex-grow-1 position-relative pe-5">
+      <ng-container *ngFor="let col of row">
+        <div #tile="appTile" class="card p-3" cdkDrag appTile>
+          <div class="h-100">
+            <ng-container *ngTemplateOutlet="col.view"></ng-container>
+          </div>
+          <div class="position-absolute top-0 end-0 p-3 d-flex flex-column gap-1" style="width: initial">
+            <i class="bi bi-arrows-move cursor-pointer" cdkDragHandle></i>
+            <i class="bi bi-trash cursor-pointer" (click)="removeItem(row, col.id)"></i>
+            <i class="bi bi-arrow-right cursor-pointer" (click)="makeLarger(row, tile)"></i>
+            <i class="bi bi-arrow-left cursor-pointer" (click)="makeSmaller(row, tile)"></i>
+            <i *ngIf="tile.width" (click)="resetSize(tile)">W: {{ tile.width }} / 12</i>
+          </div>
+        </div>
+      </ng-container>
+      <div class="position-absolute top-0 end-0 p-3 d-flex flex-column gap-1" style="width: initial">
+        <i class="bi bi-three-dots-vertical  cursor-pointer"></i>
+        <i class="bi bi-plus  cursor-pointer" (click)="addItem(row)"></i>
+        <i class="bi bi-trash cursor-pointer" (click)="removeRow(rowIndex)"></i>
+        <i class="bi bi-file-earmark-plus  cursor-pointer" (click)="addRow()"></i>
+      </div>
+    </div>
+  </ng-container>
+</div>
