@@ -1,6 +1,6 @@
 <div class="d-flex flex-column h-100" cdkDropListGroup>
   <ng-container *ngFor="let row of contentsMatrix; index as rowIndex">
-    <div appTileContainer #ctnr="appTileContainer" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="row" (cdkDropListDropped)="drop($event)" class="gap-3 p-3 flex-grow-1 position-relative pe-5">
+    <div appTileContainer #ctnr="appTileContainer" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="row" (cdkDropListDropped)="drop($event)" class="flex-grow-1 position-relative pe-5">
       <ng-container *ngFor="let col of row">
         <div #tile="appTile" class="card p-3" cdkDrag appTile>
           <div>
