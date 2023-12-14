@@ -18,7 +18,9 @@ export class GridComponent implements AfterViewInit {
   @ContentChildren(GridItemDirective, { read: GridItemDirective })
   items!: QueryList<GridItemDirective>;
 
-  contentsMatrix: ContentsMatrixItem[][] = [];
+  contentsMatrix: ContentsMatrixItem[][] = [[]];
+
+  flatContents: ContentsMatrixItem[] = [];
 
   removeRow(index: number): void {
     this.contentsMatrix.splice(index, 1);
@@ -60,13 +62,6 @@ export class GridComponent implements AfterViewInit {
     }
   }
 
-  addItem(target?: ContentsMatrixItem[]): void {
-    const contents = prompt('Item Contents?');
-    if (contents) {
-      // target?.push(contents);
-    }
-  }
-
   drop(event: CdkDragDrop<any>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -81,11 +76,10 @@ export class GridComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('grid items', this.items);
     const items: ContentsMatrixItem[] = this.items.toArray().map(it => {
       return { id: it.appGridItem ?? '', label: it.label ?? '', view: it.templateRef };
     });
 
-    this.contentsMatrix.push(items);
+    this.flatContents = items;
   }
 }
