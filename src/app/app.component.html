@@ -2,13 +2,16 @@
   <ng-container *ngFor="let row of contentsMatrix; index as rowIndex">
     <div appTileContainer #ctnr="appTileContainer" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="row" (cdkDropListDropped)="drop($event)" class="gap-3 p-3 flex-grow-1 position-relative pe-5">
       <ng-container *ngFor="let col of row">
-        <div class="card p-3" cdkDrag appTile>
+        <div #tile="appTile" class="card p-3" cdkDrag appTile>
           <div>
             {{ col }}
           </div>
           <div class="position-absolute top-0 end-0 p-3 d-flex flex-column gap-1" style="width: initial">
             <i class="bi bi-arrows-move cursor-pointer" cdkDragHandle></i>
             <i class="bi bi-trash cursor-pointer" (click)="removeItem(row, col)"></i>
+            <i class="bi bi-arrow-right cursor-pointer" (click)="makeLarger(row, col, tile)"></i>
+            <i class="bi bi-arrow-left cursor-pointer" (click)="makeSmaller(row, col, tile)"></i>
+            <i *ngIf="tile.width">W: {{ tile.width }} / 12</i>
           </div>
         </div>
       </ng-container>
